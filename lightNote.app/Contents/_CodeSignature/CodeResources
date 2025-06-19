@@ -4,13 +4,17 @@
 <dict>
 	<key>files</key>
 	<dict>
+		<key>Resources/.gitignore</key>
+		<data>
+		fWVSPypa+2nXaCTdHfpio0+qMZc=
+		</data>
 		<key>Resources/AppIcon.icns</key>
 		<data>
-		0tHzxq/sGAKP8kTS3j0EBVl5oFE=
+		nppZBeRiHmez1BAtBfqF6hnK+vY=
 		</data>
 		<key>Resources/Assets.car</key>
 		<data>
-		OljCl1MNuFkE/qdQPzFJOKx42X8=
+		IfLJmFDm7PYCr131dPR6EgZgEMY=
 		</data>
 		<key>Resources/LightNote.png</key>
 		<data>
@@ -37,18 +41,25 @@
 			<key>requirement</key>
 			<string>identifier "lightNote.debug" and anchor apple generic and certificate leaf[subject.CN] = "Apple Development: johntheghostie@gmail.com (CP38CDTTHF)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
 		</dict>
+		<key>Resources/.gitignore</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			zyN8ev9E775uUC5kXD4G2gOmnXvetDOSEI7zNIFDQX4=
+			</data>
+		</dict>
 		<key>Resources/AppIcon.icns</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			LtPfmIux4tZlbT9bNg9j22tnIObI9XX62MixApXwTuU=
+			Txl9A+rcB4tTLhRcuowmJoHMkwQ6z5adxrgHyCrWoXs=
 			</data>
 		</dict>
 		<key>Resources/Assets.car</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			vPnGtzZrauQpXynQqA+mE5N8iO/hnhRA1ZFgBQ8FD6M=
+			ACt3awRc/t5WU22JWU23enNGEzoIxFDufp8/Y3NiyV4=
 			</data>
 		</dict>
 		<key>Resources/LightNote.png</key>
