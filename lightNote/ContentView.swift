@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  lightNote
+//  LightNote
 //
 //  Created by Xing Wei on 18/6/25.
 //
@@ -18,7 +18,12 @@ func writeFile(text: String, fileURL: URL){
 
 func removeFile(fileURL: URL){
     let fileManager = FileManager.default
-
+    let allowedExtensions = ["txt", "md", "log"]
+    //ONLY LISTED EXTENSIONS
+    guard allowedExtensions.contains(fileURL.pathExtension.lowercased()) else {
+        return
+    }
+    
     do {
         try fileManager.removeItem(at: fileURL)
     } catch {
@@ -39,20 +44,17 @@ func readFile(from path: String) -> String? {
 
 
 struct ContentView: View {
-    @State private var path: String = "/Users/xw/Downloads/test.txt"
+    @State private var path: String = "/Users/"
     @State private var textword: String = ""
     
     var body: some View {
         VStack(alignment: .leading) {
             TextEditor(text: $textword)
-                .frame(width: 300, height: 200)
+                .frame(width: 320, height: 250)
                 .border(Color.accentColor, width: 1)
+                .font(.system(size: 13, design: .monospaced))
                 .padding(5)
-                #if DEBUG
-                .font(.body)
-                #else
-                .font(.custom("jetbrainsmononl nf", size: 13))
-                #endif
+
             
             HStack {
                 Spacer()
@@ -67,7 +69,7 @@ struct ContentView: View {
                 Button("Save") {
                     writeFile(text: textword, fileURL: URL(filePath: path))
                 }
-                .keyboardShortcut("s", modifiers: [.command])
+                .keyboardShortcut("s", modifiers: .command)
                 .padding(5)
 
                 Spacer()
@@ -96,11 +98,7 @@ struct ContentView: View {
                     Label("Quit", systemImage: "power")
                 }.buttonStyle(.borderless).foregroundColor(.accentColor)
             }
-            .frame(width: 310)
+            .frame(width: 330)
         }
     }
 }
-
-//#Preview {
-//    ContentView()
-//}
