@@ -7,16 +7,14 @@
 
 import SwiftUI
 
-func writeFile(text: String, fileURL: URL){
+private func writeFile(text: String, fileURL: URL){
     do {
         try text.write(to: fileURL, atomically: true, encoding: .utf8)
-    }
-    catch {
-        print("Error writing: \(error.localizedDescription)")
+    } catch {
     }
 }
 
-func removeFile(fileURL: URL){
+private func removeFile(fileURL: URL){
     let fileManager = FileManager.default
     let allowedExtensions = ["txt", "md", "log"]
     //ONLY LISTED EXTENSIONS
@@ -27,35 +25,32 @@ func removeFile(fileURL: URL){
     do {
         try fileManager.removeItem(at: fileURL)
     } catch {
-        print("Error: \(error)")
     }
 }
 
-func readFile(from path: String) -> String? {
-    let fileURL = URL(fileURLWithPath: path)
-
+private func readFile(filePath: String) -> String {
     do {
-        let contents = try String(contentsOf: fileURL, encoding: .utf8)
+        let contents = try String(contentsOf: URL(fileURLWithPath: filePath), encoding: .utf8)
         return contents
     } catch {
         return ""
     }
 }
 
-
 struct ContentView: View {
-    @State private var path: String = "/Users/"
-    @State private var textword: String = ""
+    @State private var path: String = UserDefaults.standard.string(forKey: "recentFilePath") ?? "/Users/"
+    @State private var textWords: String = ""
     
     var body: some View {
         VStack(alignment: .leading) {
-            TextEditor(text: $textword)
+            // Text Editor
+            TextEditor(text: $textWords)
                 .frame(width: 320, height: 250)
                 .border(Color.accentColor, width: 1)
                 .font(.system(size: 13, design: .monospaced))
                 .padding(5)
 
-            
+            // Path Input
             HStack {
                 Spacer()
                 TextField("Your Path", text: $path)
@@ -64,10 +59,12 @@ struct ContentView: View {
                 Spacer()
             }
             
+            // Buttons: Save / Load / Delete
             HStack {
                 // Left-aligned
                 Button("Save") {
-                    writeFile(text: textword, fileURL: URL(filePath: path))
+                    writeFile(text: textWords, fileURL: URL(fileURLWithPath: path))
+                    storePath()
                 }
                 .keyboardShortcut("s", modifiers: .command)
                 .padding(5)
@@ -76,21 +73,22 @@ struct ContentView: View {
 
                 // Center-aligned
                 Button("Load") {
-                    if let contents = readFile(from: path) {
-                        textword = contents
-                    }
+                    textWords = readFile(filePath: path)
+                    storePath()
                 }
 
                 Spacer()
                 
                 // Right-aligned
                 Button("Delete") {
-                    let url = URL(filePath: path)
-                    removeFile(fileURL: url)
+                    removeFile(fileURL: URL(fileURLWithPath: path))
+                    storePath()
                 }
                 .padding(5)
             
             }
+            
+            // Quit Button
             .safeAreaInset(edge: .bottom){
                 Button(action: {
                     NSApplication.shared.terminate(nil)
@@ -100,5 +98,9 @@ struct ContentView: View {
             }
             .frame(width: 330)
         }
+    }
+    
+    private func storePath() {
+        UserDefaults.standard.set(path, forKey: "recentFilePath")
     }
 }
